@@ -29,6 +29,8 @@ public class PatientService {
     LabsRepository labsRepository;
     @Autowired
     MedicalHistoryRepository medicalHistoryRepository;
+    @Autowired
+    FileStorageService fileStorageService;
 
     public Patient createPatient(Patient patient) {
         Patient savedPatient = patientRepository.save(patient);
@@ -68,17 +70,20 @@ public class PatientService {
         return patientRepository.findAll();
     }
 
-    public List<Patient> getPatientsByName (String searchTerm) throws RepositoryException {
+    public List<Patient> getPatientsByName(String searchTerm) throws RepositoryException {
         Optional<List<Patient>> patientsOptional = patientRepository.searchByName(searchTerm);
         if (patientsOptional.isPresent()) {
             return patientsOptional.get();
-        }
-        else {
+        } else {
             throw new RepositoryException("Hubo un error al obtener los pacientes");
         }
     }
 
     public String deletePatient(Long id) {
+        Patient patient = patientRepository.findById(id).orElseThrow(() -> new NotFoundException("Paciente no encontrado"));
+        String patientName = patient.getSurname() + "_" + patient.getName();
+        patientName = patientName.replaceAll("[^a-zA-Z0-9_-]", "_");
+        fileStorageService.deletePatientDirectory(patientName);
         patientRepository.deleteById(id);
         return "Paciente eliminado correctamente";
     }

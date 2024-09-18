@@ -14,11 +14,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.io.File;
+
 
 @Service
 public class FileStorageService {
@@ -86,6 +89,18 @@ public class FileStorageService {
 
     private Path load(String filename) {
         return rootLocation.resolve(filename);
+    }
+
+    public void deletePatientDirectory(String patientName) {
+        Path patientDirectory = rootLocation.resolve(patientName);
+        try {
+                Files.walk(patientDirectory)
+                        .sorted(Comparator.reverseOrder())
+                        .map(Path::toFile)
+                        .forEach(File::delete);
+        } catch (IOException e) {
+            throw new RuntimeException("Error al eliminar el directorio del paciente", e);
+        }
     }
 }
 
