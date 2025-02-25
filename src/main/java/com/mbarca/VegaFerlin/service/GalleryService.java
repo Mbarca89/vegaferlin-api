@@ -26,6 +26,7 @@ public class GalleryService {
     PatientRepository patientRepository;
     @Autowired
     ImageCompressor imageCompressor;
+
     public Map<String, List<String>> getAllThumbsByPatientId(Long patientId, String study) {
         Optional<Gallery> galleryOptional = galleryRepository.findByPatientId(patientId);
         if (galleryOptional.isPresent()) {

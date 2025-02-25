@@ -52,6 +52,8 @@ public class ImageController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+
     @GetMapping("/download/{patient}/{study}/{extraDir}/{filename:.+}")
     public ResponseEntity<Resource> downloadImage(
             @PathVariable String patient,
