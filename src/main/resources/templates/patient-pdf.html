@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #2F4F4F;
+        }
+
+        .section {
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 5px;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Ficha del Paciente</h1>
+
+    <p><strong>Nombre:</strong> <span th:text="${patient.name + ' ' + patient.surname}"></span></p>
+    <p><strong>Tipo de documento:</strong> <span th:text="${patient.docType}"></span></p>
+    <p><strong>Número de documento:</strong> <span th:text="${patient.doc}"></span></p>
+    <p><strong>Género:</strong> <span th:text="${patient.gender}"></span></p>
+    <p><strong>Fecha de nacimiento:</strong> <span th:text="${#dates.format(patient.birth, 'dd/MM/yyyy')}"></span></p>
+    <p><strong>Nacionalidad:</strong> <span th:text="${patient.nationality}"></span></p>
+    <p><strong>Estado civil:</strong> <span th:text="${patient.civilState}"></span></p>
+    <p><strong>País:</strong> <span th:text="${patient.country}"></span></p>
+    <p><strong>Provincia:</strong> <span th:text="${patient.state}"></span></p>
+    <p><strong>Ciudad:</strong> <span th:text="${patient.city}"></span></p>
+    <p><strong>Dirección:</strong> <span th:text="${patient.address}"></span></p>
+    <p><strong>Teléfono:</strong> <span th:text="${patient.phone}"></span></p>
+    <p><strong>Email:</strong> <span th:text="${patient.email}"></span></p>
+    <p><strong>Profesional a cargo:</strong> <span th:text="${patient.inChargeOf}"></span></p>
+    <p><strong>Derivado por:</strong> <span th:text="${patient.derivedBy}"></span></p>
+    <p><strong>Ocupación:</strong> <span th:text="${patient.occupation}"></span></p>
+    <p><strong>Estudios:</strong> <span th:text="${patient.studies}"></span></p>
+    <p><strong>Dirección laboral:</strong> <span th:text="${patient.workAddress}"></span></p>
+    <p><strong>Horario laboral:</strong> <span th:text="${patient.workingHours}"></span></p>
+    <p><strong>Obra social:</strong> <span th:text="${patient.social}"></span></p>
+    <p><strong>Número de afiliado a obra social:</strong> <span th:text="${patient.socialNumber}"></span></p>
+    <p><strong>Observaciones:</strong> <span th:text="${patient.observations}"></span></p>
+
+    <hr />
+
+    <div class="section" th:if="${healthQuestionnaire != null}">
+        <h2>Cuestionario de Salud</h2>
+        <p><strong>¿Tiene alguna alteración de la salud?</strong> <span
+                th:text="${healthQuestionnaire.healthAlteration} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Ha experimentado algun cambio en su salud el último año?</strong> <span
+                th:text="${healthQuestionnaire.healthChange} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Cuando fue su ultimo checkeo médico?</strong> <span
+                th:text="${healthQuestionnaire.lastMedicalCheck}">-</span></p>
+        <p><strong>¿Está siendo atendido por algún médico?</strong> <span
+                th:text="${healthQuestionnaire.medicalAttention} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>Si lo estuviera ¿Por que motivo?</strong> <span
+                th:text="${healthQuestionnaire.medicalAttentionReason}">-</span></p>
+        <p><strong>Nombre y teléfono de su médico:</strong> <span
+                th:text="${healthQuestionnaire.medicInformation}">-</span></p>
+        <p><strong>¿Ha sufrido alguna operación de gravedad?</strong> <span
+                th:text="${healthQuestionnaire.majorSurgery} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>En caso afirmativo, explíquelo:</strong> <span
+                th:text="${healthQuestionnaire.majorSurgeryReason}">-</span></p>
+        <p><strong>¿Ha sido hospitalizado o ha sufrido algun trastorno grave en los últimos 5 años?</strong> <span
+                th:text="${healthQuestionnaire.hospitalized} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>En caso afirmativo, explíquelo:</strong> <span
+                th:text="${healthQuestionnaire.hospitalizedReason}">-</span></p>
+        <p><strong>Estatura:</strong> <span th:text="${healthQuestionnaire.height}">-</span></p>
+        <p><strong>Peso:</strong> <span th:text="${healthQuestionnaire.weight}">-</span></p>
+        <p><strong>Presión arterial máxima:</strong> <span th:text="${healthQuestionnaire.maxBloodPressure}">-</span>
+        </p>
+        <p><strong>Presión arterial mínima:</strong> <span th:text="${healthQuestionnaire.minBloodPressure}">-</span>
+        </p>
+        <p><strong>Pulso:</strong> <span th:text="${healthQuestionnaire.pulse}">-</span></p>
+        <p><strong>Observaciones:</strong> <span th:text="${healthQuestionnaire.generalObservations}">-</span></p>
+
+        <h3>Aparato cardiovascular</h3>
+        <p><strong>¿Tiene o ha tenido alguna vez...</strong></p>
+        <p><strong>Ataques cardíacos, trombosis o embolias, insuficiencia coronaria, lesiones de válvulas cardíacas o
+                cardiopatias congénitas?</strong> <span
+                th:text="${healthQuestionnaire.heartAttacks} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>Cardiopatía reunmática o soplos al corazón?</strong> <span
+                th:text="${healthQuestionnaire.rheumatic} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>Dolor torácico tras un esfuerzo?</strong> <span
+                th:text="${healthQuestionnaire.chestPain} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>Falta de aire tras un ejercicio leve?</strong> <span
+                th:text="${healthQuestionnaire.breath} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>Hinchazón de tobillos?</strong> <span th:text="${healthQuestionnaire.ankle} ? 'Sí' : 'No'">-</span>
+        </p>
+
+        <p><strong>¿Usa de más de una almohada para dormir?</strong> <span
+                th:text="${healthQuestionnaire.pillow} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Usa marcapasos?</strong> <span th:text="${healthQuestionnaire.pacemaker} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Tiene problemas de presión arterial?</strong> <span
+                th:text="${healthQuestionnaire.bloodPressureProblems} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>Observaciones:</strong> <span th:text="${healthQuestionnaire.hearthObservations}">-</span></p>
+
+        <h3>Sistema nervioso central</h3>
+        <p><strong>¿Tiene o ha tenido alguna vez...</strong></p>
+        <p><strong>Epilepsia?</strong> <span th:text="${healthQuestionnaire.epilepsy} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>Desmayos?</strong> <span th:text="${healthQuestionnaire.faints} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>Convulsiones?</strong> <span th:text="${healthQuestionnaire.seizures} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>Alteraciones emocionales?</strong> <span
+                th:text="${healthQuestionnaire.emotionalAlteration} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Sigue algun tratamiento por alteraciones nerviosas?</strong> <span
+                th:text="${healthQuestionnaire.alterationsTreatment} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>Observaciones:</strong> <span th:text="${healthQuestionnaire.nervousObservations}">-</span></p>
+
+        <h3>Sistema respiratorio</h3>
+        <p><strong>¿Padece resfriado o tos habitual?</strong> <span
+                th:text="${healthQuestionnaire.cough} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Tiene o ha tenido alguna vez tuberculosis?</strong> <span
+                th:text="${healthQuestionnaire.tuberculosis} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Hay antecedentes de tuberculosis en su familia?</strong> <span
+                th:text="${healthQuestionnaire.familyTuberculosis} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Tiene sinusitis o problemas sinusales?</strong> <span
+                th:text="${healthQuestionnaire.sinusitis} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Tiene bronquitis crónica o asma?</strong> <span
+                th:text="${healthQuestionnaire.asma} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>Observaciones:</strong> <span th:text="${healthQuestionnaire.breathObservations}">-</span></p>
+
+        <h3>Aparato digestivo</h3>
+        <p><strong>¿Tiene alguna úlcera de estómago?</strong> <span
+                th:text="${healthQuestionnaire.stomachUlcer} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Tiene o ha tenido hepatitis?</strong> <span
+                th:text="${healthQuestionnaire.hepatitis} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Tiene o ha tenido ictericia?</strong> <span
+                th:text="${healthQuestionnaire.jaundice} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Tiene o ha tenido enfermedades hepáticas?</strong> <span
+                th:text="${healthQuestionnaire.liver} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Ha vomitado sangre?</strong> <span
+                th:text="${healthQuestionnaire.bloodVomit} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>Observaciones:</strong> <span th:text="${healthQuestionnaire.digestiveObservations}">-</span></p>
+
+        <h3>Sistema endócrino</h3>
+        <p><strong>¿Padece diabetes?</strong> <span th:text="${healthQuestionnaire.diabetis} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Padece diabetes alguien en su familia?</strong> <span
+                th:text="${healthQuestionnaire.familyDiabetis} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Orina mas de seis veces al dia?</strong> <span
+                th:text="${healthQuestionnaire.urinate} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Siente sed muy a menudo o tiene sequedad en la boca?</strong> <span
+                th:text="${healthQuestionnaire.thirst} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Tiene hipotiroidismo?</strong> <span
+                th:text="${healthQuestionnaire.hypothyroidism} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Tiene hipertiroidismo?</strong> <span
+                th:text="${healthQuestionnaire.hyperthyroidism} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>Observaciones:</strong> <span th:text="${healthQuestionnaire.endocrineObservations}">-</span></p>
+
+        <h3>Sistema hematopoyetico</h3>
+        <p><strong>¿Padece anemia, anemia hemolítica o trastornos sanguíneos?</strong> <span
+                th:text="${healthQuestionnaire.bloodProblems} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Tiene antecedentes familiares de alteraciones sanguíneas?</strong> <span
+                th:text="${healthQuestionnaire.familyBloodProblems} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Es usted hemofílico?</strong> <span
+                th:text="${healthQuestionnaire.hemophiliac} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Ha sangrado anormalmente tras una operación o traumatismo?</strong> <span
+                th:text="${healthQuestionnaire.abnormalBlood} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Ha recibido alguna vez una transfusión sanguínea?</strong> <span
+                th:text="${healthQuestionnaire.bloodTransfusion} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>Observaciones:</strong> <span th:text="${healthQuestionnaire.bloodObservation}">-</span></p>
+
+        <h3>Alergias</h3>
+        <p><strong>¿Tiene o ha tenido alguna vez...</strong></p>
+        <p><strong>Anestésicos locales?</strong> <span
+                th:text="${healthQuestionnaire.anestheticsAlergy} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>Antibióticos, penicilinas o sulfamidas?</strong> <span
+                th:text="${healthQuestionnaire.antibioticsAlergy} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>Barbitúricos, sedantes o somniferos?</strong> <span
+                th:text="${healthQuestionnaire.barbituratesAlergy} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>Antiinflamatorios o analgésicos?</strong> <span
+                th:text="${healthQuestionnaire.analgesicsAlergy} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Tiene asma?</strong> <span th:text="${healthQuestionnaire.asthma} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Tiene o ha tenido alguna vez ronchas o erupciones cutáneas?</strong> <span
+                th:text="${healthQuestionnaire.skin} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>Observaciones:</strong> <span th:text="${healthQuestionnaire.alergyObservations}">-</span></p>
+
+        <h3>Sistema genitourinario</h3>
+        <p><strong>¿Tiene o ha tenido alguna vez...</strong></p>
+        <p><strong>Problemas de riñón?</strong> <span
+                th:text="${healthQuestionnaire.kidneyProblems} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>Sífilis o gonorrea?</strong> <span th:text="${healthQuestionnaire.syphilis} ? 'Sí' : 'No'">-</span>
+        </p>
+        <p><strong>SIDA (serología HIV positivo)?</strong> <span
+                th:text="${healthQuestionnaire.hiv} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>Observaciones:</strong> <span th:text="${healthQuestionnaire.genitourinaryObservations}">-</span></p>
+
+        <h3>Neoplasias</h3>
+        <p><strong>¿Tiene o ha tenido alguna vez...</strong></p>
+        <p><strong>Tumores o masa maligna?</strong> <span th:text="${healthQuestionnaire.tumors} ? 'Sí' : 'No'">-</span>
+        </p>
+        <p><strong>Quimioterapia o radioterapia?</strong> <span
+                th:text="${healthQuestionnaire.quimio} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Está expuesto regularmente a rayos X u otra radiación ionizante o tóxica?</strong> <span
+                th:text="${healthQuestionnaire.xrays} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>Observaciones:</strong> <span th:text="${healthQuestionnaire.neoplaciaObservations}">-</span></p>
+
+        <h3>Hábitos</h3>
+        <p><strong>¿Bebe alcohol?</strong> <span th:text="${healthQuestionnaire.alcohol} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Fuma?</strong> <span th:text="${healthQuestionnaire.smoker} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Cuantos cigarrillos al dia?</strong> <span th:text="${healthQuestionnaire.smokeTimes}">-</span></p>
+        <p><strong>Observaciones:</strong> <span th:text="${healthQuestionnaire.habitsObservations}">-</span></p>
+
+        <h3>Medicamentos</h3>
+        <p><strong>¿Tiene o ha tenido alguna vez...</strong></p>
+        <p><strong>Antibióticos:</strong> <span th:text="${healthQuestionnaire.antibiotics} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>Anticoagulantes:</strong> <span
+                th:text="${healthQuestionnaire.anticoagulants} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>Medicamentos para la hipertensión arterial:</strong> <span
+                th:text="${healthQuestionnaire.bloodMedicines} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>Tranquilizantes:</strong> <span
+                th:text="${healthQuestionnaire.tranquillizers} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>Hormonas:</strong> <span th:text="${healthQuestionnaire.hormones} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>Aspirinas:</strong> <span th:text="${healthQuestionnaire.aspirines} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>Medicamentos recetados para el control de la osteoporosis (bifosfonatos):</strong> <span
+                th:text="${healthQuestionnaire.bisphosphonates} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>Otros:</strong> <span th:text="${healthQuestionnaire.otherMeds}">-</span></p>
+        <p><strong>Observaciones:</strong> <span th:text="${healthQuestionnaire.midicineObservations}">-</span></p>
+
+        <h3>Mujeres</h3>
+        <p><strong>¿Está embarajada?</strong> <span th:text="${healthQuestionnaire.pregnant} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Cree que puede estarlo?</strong> <span
+                th:text="${healthQuestionnaire.pregnantPosibilities} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Está dando el pecho?</strong> <span
+                th:text="${healthQuestionnaire.breastfeeding} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Tiene algún problema relacionado con su ciclo menstrual?</strong> <span
+                th:text="${healthQuestionnaire.menstrual} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Está tomando anticonceptivos o realizando algún tratamiento hormonal?</strong> <span
+                th:text="${healthQuestionnaire.hormonalTreatment} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Se ha retirado definitivamente su periodo menstrual?</strong> <span
+                th:text="${healthQuestionnaire.menstrualDisease} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Padece alguna enfermedad, alteración o problema que no hayamos enumedaro y que crea que deberiamos
+                conocer?</strong> <span th:text="${healthQuestionnaire.otherDiseases} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>En caso afirmativo explíquelo:</strong> <span
+                th:text="${healthQuestionnaire.otherDiseasesReason}">-</span></p>
+        <p><strong>Observaciones:</strong> <span th:text="${healthQuestionnaire.womanObservations}">-</span></p>
+
+        <h3>Cuestionario odontológico</h3>
+        <p><strong>¿Cual es su principal problema dental o motivo de consulta?</strong> <span
+                th:text="${healthQuestionnaire.mainDentalProblem}">-</span></p>
+        <p><strong>¿Siente alguna molestia o dolor en este momento?</strong> <span
+                th:text="${healthQuestionnaire.pain} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Se siente insatisfecho con el aspecto de sus dientes?</strong> <span
+                th:text="${healthQuestionnaire.dentalAspect} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Tiene alguna dificultad para comer y masticar los alimentos?</strong> <span
+                th:text="${healthQuestionnaire.eatingProblems} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Padece dolores de cabeza, de oídos o cuello?</strong> <span
+                th:text="${healthQuestionnaire.headache} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Padece con frecuencia problemas de senos paranasales?</strong> <span
+                th:text="${healthQuestionnaire.sinuses} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>¿Ha tenido algún problema relacionado con algún tratamiento anterior?</strong> <span
+                th:text="${healthQuestionnaire.previousTreatmentProblems} ? 'Sí' : 'No'">-</span></p>
+        <p><strong>En caso afirmativo explíquelo:</strong> <span
+                th:text="${healthQuestionnaire.previousTreatmentProblemsReason}">-</span></p>
+        <p><strong>Observaciones:</strong> <span th:text="${healthQuestionnaire.dentalObservations}">-</span></p>
+    </div>
+
+    <hr />
+
+    <div class="section" th:if="${medicalHistory != null}">
+        <h2>Historia clínica</h2>
+        <h3>Antecedentes hereditarios y familiares</h3>
+        <p><strong>Padres:</strong> <span th:text="${medicalHistory.parents}">-</span></p>
+        <p><strong>Hermanos:</strong> <span th:text="${medicalHistory.siblings}">-</span></p>
+        <p><strong>Hijos:</strong> <span th:text="${medicalHistory.children}">-</span></p>
+
+        <h3>Antecedentes de enfermedad actual</h3>
+        <p><strong>Antecedentes de enfermedad actual:</strong> <span
+                th:text="${medicalHistory.actualDiseaseHistory}">-</span></p>
+
+        <h3>Antecedentes personales</h3>
+        <p><strong>Patológicos:</strong> <span th:text="${medicalHistory.pathologicalHistory}">-</span></p>
+        <p><strong>Traumatológicos:</strong> <span th:text="${medicalHistory.traumaHistory}">-</span></p>
+        <p><strong>Intervenciones quirúrgicas:</strong> <span th:text="${medicalHistory.surgeries}">-</span></p>
+        <p><strong>Medicación:</strong> <span th:text="${medicalHistory.medication}">-</span></p>
+        <p><strong>Alergias:</strong> <span th:text="${medicalHistory.allergies}">-</span></p>
+
+        <h3>Hábitos</h3>
+        <p><strong>Alcohol:</strong> <span th:text="${medicalHistory.alcohol}">-</span></p>
+        <p><strong>Tabaco:</strong> <span th:text="${medicalHistory.tobacco}">-</span></p>
+        <p><strong>Drogas:</strong> <span th:text="${medicalHistory.drugs}">-</span></p>
+        <p><strong>Indicar drogas:</strong> <span th:text="${medicalHistory.drugsDetail}">-</span></p>
+    </div>
+
+    <div class="section">
+        <h2>Evaluación Odontológica</h2>
+        <p><strong>Uso de cepillo dental:</strong> <span th:text="${dentalEvaluation.brush ? 'Sí' : 'No'}"></span></p>
+        <p><strong>Frecuencia de uso del cepillo dental:</strong> <span
+                th:text="${dentalEvaluation.brushFrequency}"></span></p>
+        <p><strong>Uso de hilo dental:</strong> <span th:text="${dentalEvaluation.floss ? 'Sí' : 'No'}"></span></p>
+        <p><strong>Frecuencia de uso de hilo dental:</strong> <span th:text="${dentalEvaluation.flossFrequency}"></span>
+        </p>
+        <p><strong>Uso de cepillo interdental:</strong> <span
+                th:text="${dentalEvaluation.interdentalBrush ? 'Sí' : 'No'}"></span></p>
+        <p><strong>Frecuencia de uso de cepillo interdental:</strong> <span
+                th:text="${dentalEvaluation.interdentalBrushFrequency}"></span></p>
+        <p><strong>Biotipo periodontal:</strong> <span th:text="${dentalEvaluation.biotype}"></span></p>
+        <p><strong>Línea de sonrisa:</strong> <span th:text="${dentalEvaluation.smile}"></span></p>
+        <p><strong>Pérdida de dimensión vertical:</strong> <span
+                th:text="${dentalEvaluation.verticalLoss ? 'Sí' : 'No'}"></span></p>
+        <p><strong>Cambio de posición mandibular:</strong> <span
+                th:text="${dentalEvaluation.jawPosition ? 'Sí' : 'No'}"></span></p>
+        <p><strong>Dispersión anterior:</strong> <span th:text="${dentalEvaluation.dispersion ? 'Sí' : 'No'}"></span>
+        </p>
+        <p><strong>Facetas de desgaste anterior:</strong> <span th:text="${dentalEvaluation.wear ? 'Sí' : 'No'}"></span>
+        </p>
+        <p><strong>Facetas de desgaste:</strong> <span th:text="${dentalEvaluation.wearType}"></span></p>
+        <p><strong>Examen intraoral de tejidos blandos:</strong> <span
+                th:text="${dentalEvaluation.internalExam}"></span></p>
+        <p><strong>Examen extraoral:</strong> <span th:text="${dentalEvaluation.externalExam}"></span></p>
+    </div>
+
+    <div class="section" th:if="${activityLog != null}">
+        <h2>Historial</h2>
+        <p><strong>Actividad realizada:</strong> <span th:text="${activityLog.activity}">-</span></p>
+        <p><strong>Profesional a cargo de la actividad:</strong> <span th:text="${activityLog.username}">-</span></p>
+        <p><strong>Fecha y Hora:</strong> <span th:text="${activityLog.timestamp}">-</span></p>
+        <p><strong>Notas:</strong> <span th:text="${activityLog.notes}">-</span></p>
+    </div>
+
+    <div class="section" th:if="${workPlans != null and !workPlans.isEmpty()}">
+        <h2>Planes de Trabajo</h2>
+        <div th:each="plan : ${workPlans}">
+            <p><strong>Inicio:</strong> <span th:text="${#dates.format(plan.startDate, 'dd/MM/yyyy')}">-</span></p>
+            <p><strong>Fin:</strong> <span th:text="${#dates.format(plan.endDate, 'dd/MM/yyyy')}">-</span></p>
+            <p><strong>Estado:</strong> <span th:text="${plan.status}">-</span></p>
+            <p><strong>Observaciones:</strong> <span th:text="${plan.observations}">-</span></p>
+
+            <div th:if="${plan.stages != null and !plan.stages.isEmpty()}">
+                <p><strong>Etapas:</strong></p>
+                <ul>
+                    <li th:each="stage : ${plan.stages}" th:text="${stage}">Etapa</li>
+                </ul>
+            </div>
+            <hr />
+        </div>
+    </div>
+
+
+    <div class="section" th:if="${surgicalProtocols != null and !surgicalProtocols.isEmpty()}">
+        <h2>Protocolos Quirúrgicos</h2>
+        <div th:each="protocol : ${surgicalProtocols}">
+            <p><strong>Fecha:</strong> <span th:text="${protocol.date}">-</span></p>
+            <p><strong>Primer Asistente:</strong> <span th:text="${protocol.firstAssistant}">-</span></p>
+            <p><strong>Segundo Asistente:</strong> <span th:text="${protocol.secondAssistant}">-</span></p>
+            <p><strong>Inicio:</strong> <span th:text="${protocol.startTime}">-</span></p>
+            <p><strong>Fin:</strong> <span th:text="${protocol.endTime}">-</span></p>
+            <p><strong>Medicación Preoperatoria:</strong> <span th:text="${protocol.preMed}">-</span></p>
+            <p><strong>Medicación Postoperatoria:</strong> <span th:text="${protocol.postMed}">-</span></p>
+            <p><strong>Tipo de cirugía:</strong> <span th:text="${protocol.surgeryType}">-</span></p>
+            <p><strong>Otros:</strong> <span th:text="${protocol.others}">-</span></p>
+            <p><strong>Maxilar superior:</strong> <span th:text="${protocol.topMaxillary} ? 'Sí' : 'No'">-</span></p>
+            <p><strong>Mandíbula:</strong> <span th:text="${protocol.jaw} ? 'Sí' : 'No'">-</span></p>
+
+            <!-- TOP MAXILLARY INFO -->
+            <div th:if="${protocol.topMaxillary}">
+                <h3>Info Maxilar Superior</h3>
+                <div th:with="info=${protocol.topMaxillaryInfo}">
+                    <p><strong>Zona:</strong> <span th:text="${info.zone}">-</span></p>
+                    <p><strong>Anestesia:</strong> <span th:text="${info.anaesthesia}">-</span></p>
+                    <p><strong>Incisión:</strong> <span
+                            th:text="'Desde ' + ${info.incisionFrom} + ' hasta ' + ${info.incisionTo}">-</span></p>
+                    <p><strong>Disposición:</strong> <span th:text="${info.disposition}">-</span></p>
+                    <p><strong>Extensión:</strong> <span th:text="${info.extension}">-</span></p>
+                    <p><strong>Objetivo regenerativo:</strong> <span th:text="${info.regenerationObjective}">-</span>
+                    </p>
+                    <p><strong>Método de elevación:</strong> <span th:text="${info.elevationMethod}">-</span></p>
+                    <p><strong>Regeneración:</strong> <span
+                            th:text="'Desde ' + ${info.regenerationFrom} + ' hasta ' + ${info.regenerationTo}">-</span>
+                    </p>
+                    <p><strong>Membrana:</strong> <span th:text="${info.membrane}">-</span></p>
+                    <p><strong>Sutura:</strong> <span th:text="${info.sutureMaterial}">-</span></p>
+                    <p><strong>Técnica:</strong> <span th:text="${info.technique}">-</span></p>
+
+                    <!-- Compensators -->
+                    <div th:if="${info.compensators != null and !info.compensators.isEmpty()}">
+                        <p><strong>Compensadores:</strong></p>
+                        <ul>
+                            <li th:each="c : ${info.compensators}"
+                                th:text="'Ubicación: ' + ${c.location} + ' - ' + ${c.localization}"></li>
+                        </ul>
+                    </div>
+
+                    <!-- Implants -->
+                    <div th:if="${info.implants != null and !info.implants.isEmpty()}">
+                        <p><strong>Implantes:</strong></p>
+                        <ul>
+                            <li th:each="i : ${info.implants}"
+                                th:text="'Marca: ' + ${i.brand} + ', Ubicación: ' + ${i.location} + ', Conexión: ' + ${i.connection} + ', Plataforma: ' + ${i.platform} + ', Longitud: ' + ${i.length} + ', Diámetro: ' + ${i.diameter} + ', Torque: ' + ${i.torque} + ', Estabilidad: ' + ${i.stability} + ', Colocación: ' + ${i.placement} + ', Instrumental: ' + ${i.instrumentalMethod} + ' (' + ${i.instrumentalFrom} + '-' + ${i.instrumentalTo} + ')'">
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Materials -->
+                    <div th:if="${info.materials != null and !info.materials.isEmpty()}">
+                        <p><strong>Materiales:</strong></p>
+                        <ul>
+                            <li th:each="m : ${info.materials}"
+                                th:text="'Injerto: ' + ${m.grafting} + ', Autólogo: ' + ${m.autologue}"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JAW INFO -->
+            <div th:if="${protocol.jaw}">
+                <h3>Info Mandíbula</h3>
+                <div th:with="info=${protocol.jawInfo}">
+                    <p><strong>Zona:</strong> <span th:text="${info.zone}">-</span></p>
+                    <p><strong>Anestesia:</strong> <span th:text="${info.anaesthesia}">-</span></p>
+                    <p><strong>Incisión:</strong> <span
+                            th:text="'Desde ' + ${info.incisionFrom} + ' hasta ' + ${info.incisionTo}">-</span></p>
+                    <p><strong>Disposición:</strong> <span th:text="${info.disposition}">-</span></p>
+                    <p><strong>Extensión:</strong> <span th:text="${info.extension}">-</span></p>
+                    <p><strong>Objetivo regenerativo:</strong> <span th:text="${info.regenerationObjective}">-</span>
+                    </p>
+                    <p><strong>Método de elevación:</strong> <span th:text="${info.elevationMethod}">-</span></p>
+                    <p><strong>Regeneración:</strong> <span
+                            th:text="'Desde ' + ${info.regenerationFrom} + ' hasta ' + ${info.regenerationTo}">-</span>
+                    </p>
+                    <p><strong>Membrana:</strong> <span th:text="${info.membrane}">-</span></p>
+                    <p><strong>Sutura:</strong> <span th:text="${info.sutureMaterial}">-</span></p>
+                    <p><strong>Técnica:</strong> <span th:text="${info.technique}">-</span></p>
+
+
+                    <!-- Compensators -->
+                    <div th:if="${info.compensators != null and !info.compensators.isEmpty()}">
+                        <p><strong>Compensadores:</strong></p>
+                        <ul>
+                            <li th:each="c : ${info.compensators}"
+                                th:text="'Ubicación: ' + ${c.location} + ' - ' + ${c.localization}"></li>
+                        </ul>
+                    </div>
+
+                    <!-- Implants -->
+                    <div th:if="${info.implants != null and !info.implants.isEmpty()}">
+                        <p><strong>Implantes:</strong></p>
+                        <ul>
+                            <li th:each="i : ${info.implants}"
+                                th:text="'Marca: ' + ${i.brand} + ', Ubicación: ' + ${i.location} + ', Conexión: ' + ${i.connection} + ', Plataforma: ' + ${i.platform} + ', Longitud: ' + ${i.length} + ', Diámetro: ' + ${i.diameter} + ', Torque: ' + ${i.torque} + ', Estabilidad: ' + ${i.stability} + ', Colocación: ' + ${i.placement} + ', Instrumental: ' + ${i.instrumentalMethod} + ' (' + ${i.instrumentalFrom} + '-' + ${i.instrumentalTo} + ')'">
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Materials -->
+                    <div th:if="${info.materials != null and !info.materials.isEmpty()}">
+                        <p><strong>Materiales:</strong></p>
+                        <ul>
+                            <li th:each="m : ${info.materials}"
+                                th:text="'Injerto: ' + ${m.grafting} + ', Autólogo: ' + ${m.autologue}"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>
