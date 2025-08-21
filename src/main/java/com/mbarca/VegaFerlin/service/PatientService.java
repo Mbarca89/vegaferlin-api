@@ -119,4 +119,12 @@ public class PatientService {
         }).orElseThrow(() -> new RuntimeException("Paciente no encontrado!"));
     }
 
+    public void transferPatient(Long inChargeOfId, String inChargeOf, Long patientId) {
+        patientRepository.findById(patientId).map(patient -> {
+            patient.setInChargeOfId(inChargeOfId);
+            patient.setInChargeOf(inChargeOf);
+            return patientRepository.save(patient);
+        }).orElseThrow(() -> new RuntimeException("Paciente no encontrado!"));
+    }
+
 }

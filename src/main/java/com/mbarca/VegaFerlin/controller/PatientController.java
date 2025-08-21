@@ -65,6 +65,7 @@ public class PatientController {
         List<PatientListResponseDto> patients = patientService.getPatientsByName(searchTerm).stream().map(PatientMapper.INSTANCE::toPatientListResponseDto).toList();
         return ResponseEntity.status(HttpStatus.OK).body(patients);
     }
+
     @DeleteMapping("/deleteById")
     public ResponseEntity<?> deletePatientById(@RequestParam Long id) {
         String response = patientService.deletePatient(id);
@@ -83,5 +84,11 @@ public class PatientController {
         }
         patientService.updatePatient(patient, patient.getId());
         return ResponseEntity.status(HttpStatus.OK).body("Datos del paciente editados correctamente");
+    }
+
+    @PutMapping("/transfer")
+    public ResponseEntity<?> transferPatient(@RequestParam Long inChargeOfId, @RequestParam String inChargeOf, @RequestParam Long patientId) {
+        patientService.transferPatient(inChargeOfId, inChargeOf, patientId);
+        return ResponseEntity.status(HttpStatus.OK).body("Paciente transferido correctamente");
     }
 }

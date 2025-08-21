@@ -22,7 +22,7 @@ public class UserRepositoryImpl implements UserRepository {
     final String FIND_USER_BY_NAME = "SELECT * FROM Users WHERE user_name = ?";
     final String FIND_USER_BY_ID = "SELECT * FROM Users WHERE id = ?";
     private final String GET_ALL_USERS = "SELECT * FROM Users";
-    private final String EDIT_USER = "UPDATE users SET name = ?, surname = ?, password = ?, role = ?, area = ? WHERE id = ?";
+    private final String EDIT_USER = "UPDATE users SET name = ?, surname = ?, password = ?, role = ? WHERE id = ?";
 
     private final JdbcTemplate jdbcTemplate;
 

@@ -16,6 +16,10 @@
             color: #2F4F4F;
         }
 
+        h2 {
+            text-decoration: underline;
+        }
+
         .section {
             margin-top: 20px;
         }
@@ -329,13 +333,28 @@
         <p><strong>Examen extraoral:</strong> <span th:text="${dentalEvaluation.externalExam}"></span></p>
     </div>
 
-    <div class="section" th:if="${activityLog != null}">
-        <h2>Historial</h2>
-        <p><strong>Actividad realizada:</strong> <span th:text="${activityLog.activity}">-</span></p>
-        <p><strong>Profesional a cargo de la actividad:</strong> <span th:text="${activityLog.username}">-</span></p>
-        <p><strong>Fecha y Hora:</strong> <span th:text="${activityLog.timestamp}">-</span></p>
-        <p><strong>Notas:</strong> <span th:text="${activityLog.notes}">-</span></p>
-    </div>
+       <hr />
+
+<div class="section" th:if="${activityLogs != null and !activityLogs.isEmpty()}">
+  <h2>Historial</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Fecha y Hora</th>
+        <th>Actividad</th>
+        <th>Profesional</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="log : ${activityLogs}">
+        <td th:text="${#temporals.format(log.timestamp, 'dd/MM/yyyy HH:mm')}">-</td>
+        <td th:text="${log.activity}">-</td>
+        <td th:text="${log.username}">-</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
     <div class="section" th:if="${workPlans != null and !workPlans.isEmpty()}">
         <h2>Planes de Trabajo</h2>
@@ -359,7 +378,7 @@
     <div class="section" th:if="${surgicalProtocols != null and !surgicalProtocols.isEmpty()}">
         <h2>Protocolos Quirúrgicos</h2>
         <div th:each="protocol : ${surgicalProtocols}">
-            <p><strong>Fecha:</strong> <span th:text="${protocol.date}">-</span></p>
+            <p><strong>Fecha:</strong>   <span th:text="${#temporals.format(T(java.time.LocalDate).parse(protocol.date), 'dd/MM/yyyy')}">-</span></p>
             <p><strong>Primer Asistente:</strong> <span th:text="${protocol.firstAssistant}">-</span></p>
             <p><strong>Segundo Asistente:</strong> <span th:text="${protocol.secondAssistant}">-</span></p>
             <p><strong>Inicio:</strong> <span th:text="${protocol.startTime}">-</span></p>
