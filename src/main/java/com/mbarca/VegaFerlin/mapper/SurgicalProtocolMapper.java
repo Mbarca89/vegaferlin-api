@@ -10,6 +10,7 @@ import com.mbarca.VegaFerlin.model.Implant;
 import com.mbarca.VegaFerlin.model.SurgicalInfo;
 import com.mbarca.VegaFerlin.model.SurgicalProtocol;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
@@ -19,6 +20,7 @@ public interface SurgicalProtocolMapper {
 
     SurgicalProtocol toEntity(SurgicalProtocolRequestDto dto);
 
+    @Mapping(target = "inChargeOfId", source = "patient.inChargeOfId")
     SurgicalProtocolResponseDto toResponseDTO(SurgicalProtocol entity);
 
     SurgicalInfo toEntity(SurgicalInfoDto dto);

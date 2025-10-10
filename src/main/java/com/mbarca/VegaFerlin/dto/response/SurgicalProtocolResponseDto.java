@@ -23,4 +23,5 @@ public class SurgicalProtocolResponseDto {
     private boolean jaw;
     private SurgicalInfoDto topMaxillaryInfo;
     private SurgicalInfoDto jawInfo;
+    private Long inChargeOfId;
 }
