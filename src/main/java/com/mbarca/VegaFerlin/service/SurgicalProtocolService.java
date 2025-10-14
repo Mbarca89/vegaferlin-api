@@ -35,4 +35,8 @@ public class SurgicalProtocolService {
             throw new NotFoundException("Potocolo quirurgico no encontrado");
         }
     }
+
+    public void updateSurgicalProtocol(SurgicalProtocol surgicalProtocol) {
+        surgicalProtocolRepository.save(surgicalProtocol);
+    }
 }
