@@ -4,6 +4,7 @@ import com.mbarca.VegaFerlin.dto.response.AppointmentResponseDto;
 import com.mbarca.VegaFerlin.mapper.AppointmentMapper;
 import com.mbarca.VegaFerlin.model.Appointment;
 import com.mbarca.VegaFerlin.service.AppointmentService;
+import com.mbarca.VegaFerlin.service.NotificationsScheduler;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,8 @@ public class AppointmentController {
 
     @Autowired
     AppointmentService appointmentService;
+    @Autowired
+    NotificationsScheduler notificationsScheduler;
 
     @GetMapping("/get")
     public ResponseEntity<?> getAllAppointments(@RequestParam String startDate, @RequestParam String endDate) throws ParseException {
@@ -55,5 +58,16 @@ public class AppointmentController {
     public ResponseEntity<?> deleteAppointmentById(@RequestParam Long id) {
         String response = appointmentService.deleteAppointment(id);
         return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @CrossOrigin
+    @PostMapping("/resend")
+    public ResponseEntity<String> resendMessagesHandler() {
+        try {
+            notificationsScheduler.sendAppointmentReminders();
+            return ResponseEntity.status(HttpStatus.OK).body("Mensajes reenviados");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 }

@@ -25,7 +25,7 @@ public class NotificationsScheduler {
     @Autowired
     private AppointmentService appointmentService;
 
-    @Scheduled(cron = "0 48 10 * * *")
+    @Scheduled(cron = "0 00 10 * * *")
     public void sendAppointmentReminders() throws Exception {
         LocalDate tomorrow = LocalDate.now().plusDays(1);
 
