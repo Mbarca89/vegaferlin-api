@@ -5,6 +5,7 @@ import com.mbarca.VegaFerlin.model.Appointment;
 import com.mbarca.VegaFerlin.repository.AppointmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -43,5 +44,12 @@ public class AppointmentService {
         appointment.setMessageSent(newAppointment.getMessageSent());
         appointmentRepository.save(appointment);
         return "Cita modificada correctamente!";
+    }
+
+    @Transactional
+    public void markMessageSent(Long appointmentId) {
+        Appointment a = appointmentRepository.findById(appointmentId)
+                .orElseThrow(() -> new RuntimeException("Appointment not found"));
+        a.setMessageSent(true);
     }
 }
